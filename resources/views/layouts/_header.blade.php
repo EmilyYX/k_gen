@@ -5,7 +5,7 @@
             <nav>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ route('help') }}">ヘルプ</a></li>
-                    <li><a href="#">ログイン</a></li>
+                    <li><a href="{{route('signup')}}">ログイン</a></li>
                 </ul>
             </nav>
         </div>
