@@ -12,7 +12,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{route('users.show', Auth::user()->id)}}">プロフィール</a></li>
-                            <li><a href="#">プロフィールを編集</a></li>
+                            <li><a href="{{route('users.edit', Auth::user()->id)}}">プロフィールを編集</a></li>
                             <li>
                                 <a id="logout" href="#">
                                     <form action="{{route('logout')}}" method="POST">
