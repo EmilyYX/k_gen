@@ -8543,6 +8543,8 @@ input {
   max-width: 100px;
 }
 
+/* Users index */
+
 .users {
   list-style: none;
   margin: 0;
@@ -8552,5 +8554,11 @@ input {
 .users li {
   overflow: auto;
   padding: 10px 0;
+}
+
+.delete-btn {
+  float: right;
+  position: relative;
+  right: 0;
 }
 
