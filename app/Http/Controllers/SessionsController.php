@@ -25,10 +25,17 @@ class SessionsController extends Controller
         ]);
 
         if(Auth::attempt($credentials, $request->has('remember'))){
-            session()->flash('success', 'お帰りなさい！');
-            return redirect()->intended(route('users.show', [Auth::user()]));
+            if(Auth::user()->activated{
+                session()->flash('success', 'お帰りなさい！');
+                return redirect()->intended(route('users.show', [Auth::user()]));
+            })else{
+                Auth::logout();
+                session()->flash('warning', '仮アカウントです、確認メール中もリンクをクリックしてください。');
+                return redirect('/');
+            }
+
         }else{
-            session()->flash('danger', 'パスワードが正しくありません');
+            session()->flash('danger', 'パスワードが正しくありません。');
             return redirect()->back();
         }
     }

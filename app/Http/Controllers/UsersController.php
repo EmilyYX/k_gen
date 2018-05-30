@@ -11,7 +11,7 @@ class UsersController extends Controller
 {
     public function __construct(){
         $this->middleware('auth',[
-            'except'=>['show', 'create', 'store', 'index']
+            'except'=>['show', 'create', 'store', 'index', 'confirmEmail']
         ]);
         $this->middleware('guest', [
             'only'=>['create']
@@ -43,8 +43,8 @@ class UsersController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        Auth::login($user);
-        session()->flash('success', 'アカウントが作成されました！');
+        $this->sendEmailConfirmationTo($user);
+        session()->flash('success', 'アカウントが作成されました！メールアドレスをご確認ください。');
 
         return redirect()->route('users.show', [$user]);
     }
@@ -78,5 +78,29 @@ class UsersController extends Controller
         $user->delete();
         session()->flash('success', 'アカウントを削除しました。');
         return back();
+    }
+
+    protected function sendEmailConfirmationTo($user){
+        $view = 'emails.confirm';
+        $data = compact('user');
+        $from = 'aufree@yousails.com';
+        $name='';
+        $to = $user->email;
+        $subject = "うちのSNSを使ってありがとうございます。メールアドレスをご確認ください。";
+
+        Mail::send($view, $data, function($message) use ($from, $name, $to, $subject){
+            $message->from($from, $name)->to($to)->subject($subject);
+        });
+    }
+
+    public function confirmEmail($token){
+        $user = User::where('activation_token', $token)->firstOrFail();
+
+        $user->activated = true;
+        $user->activation_token = null;
+        $user->save();
+
+        Auth::login($user);
+        session()->flash('success', 'アカウントのアクティベーションが完了しました。');
     }
 }
