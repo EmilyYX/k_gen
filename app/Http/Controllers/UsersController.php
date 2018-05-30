@@ -47,7 +47,7 @@ class UsersController extends Controller
         $this->sendEmailConfirmationTo($user);
         session()->flash('success', 'アカウントが作成されました！メールアドレスをご確認ください。');
 
-        return redirect()->route('/');
+        return redirect('/');
     }
 
     public function edit(User $user){
@@ -85,7 +85,7 @@ class UsersController extends Controller
         $view = 'emails.confirm';
         $data = compact('user');
         $to = $user->email;
-        $subject = "うちのSNSを使ってありがとうございます。メールアドレスをご確認ください。";
+        $subject = "Thank you for using my SNS";
 
         Mail::send($view, $data, function($message) use ($to, $subject){
             $message->to($to)->subject($subject);
