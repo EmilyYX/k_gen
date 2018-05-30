@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\User;
 use Auth;
+use Mail;
 
 class UsersController extends Controller
 {
@@ -46,7 +47,7 @@ class UsersController extends Controller
         $this->sendEmailConfirmationTo($user);
         session()->flash('success', 'アカウントが作成されました！メールアドレスをご確認ください。');
 
-        return redirect()->route('users.show', [$user]);
+        return redirect()->route('/');
     }
 
     public function edit(User $user){
