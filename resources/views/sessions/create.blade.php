@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="password">パスワード：</label>
+                        <label for="password">パスワード：(<a href="{{route('password.request')}}">パスワードを忘れた方はこちら</a>)</label>
                         <input type="password" name="password" class="form-control" value="{{old('password')}}">
                     </div>
 
